@@ -1,0 +1,133 @@
+local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/Vape.txt")()
+
+local win = lib:Window("Astrality Hub",Color3.fromRGB(44, 120, 224), Enum.KeyCode.RightControl)
+
+local jump = win:Tab("Player")
+
+local Player = win:Tab("Extra")
+
+local EXTRA = win:Tab("More Extra...")
+
+
+local INFO = win:Tab("INFO")
+
+local plyr = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+
+
+EXTRA:Button("Time Freeze (HourGlass item)", false, function(value)
+_G.on3 = value
+
+while _G.on3 do
+    game:GetService("Players").LocalPlayer.PlayerScripts.timefreeze.Value = value
+    wait()
+end
+end)
+
+jump:Slider("WalkSpeed",0,200,0,function(t)
+    getgenv().WS = t
+end)
+
+
+jump:Toggle("WalkSpeed",false, function(t)
+    getgenv().WSon = t
+    while getgenv().WSon == true do
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = getgenv().WS
+    wait()
+    end
+    while getgenv().WSon == false do
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+    wait()
+    end
+end)
+
+jump:Slider("Jump power (1st jump)",0,200,0,function(t)
+    getgenv().JP = t
+end)
+
+
+jump:Toggle("JumpPower",false, function(t)
+    getgenv().JPon = t
+    while getgenv().JPon == true  do
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = getgenv().JP
+    
+wait()
+    
+end
+   while getgenv().JPon == false  do
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+    wait()
+    
+end
+end)
+
+
+
+
+Player:Slider("Wait Interval (dumb ui doesnt show decimals)",0.005,1,0, function(t)
+_G.waitinterval = t
+print(_G.waitinterval)
+end)
+
+Player:Toggle("TpWalk / NoClip bypass",false, function(t)
+		getgenv().Run = t
+if getgenv().Run == true then
+		while  getgenv().Run == true do 
+    plyr.CFrame = plyr.CFrame + plyr.CFrame.lookVector * 1
+    plyr.CFrame = plyr.CFrame + plyr.CFrame.lookVector * 1
+    plyr.CFrame = plyr.CFrame + plyr.CFrame.lookVector * 1
+    
+wait(_G.waitinterval)
+    end
+end
+end)
+
+Player:Slider("inf jump jump height",0,200,0, function(t)
+_G.JumpHeight = t
+print(_G.JumpHeight)
+end)
+
+
+
+Player:Toggle("Inf Jump",false, function(t)
+    local Player = game:GetService'Players'.LocalPlayer;
+    local UIS = game:GetService'UserInputService';
+    
+    function Action(Object, Function) if Object ~= nil then Function(Object); end end
+    
+    UIS.InputBegan:connect(function(UserInput)
+        if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.Space then
+            Action(Player.Character.Humanoid, function(self)
+                if self:GetState() == Enum.HumanoidStateType.Jumping or self:GetState() == Enum.HumanoidStateType.Freefall then
+                    Action(self.Parent.HumanoidRootPart, function(self)
+                        self.Velocity = Vector3.new(0, _G.JumpHeight, 0);
+                    end)
+                end
+            end)
+        end
+    end)
+end)
+
+
+EXTRA:Button("Invincibility", function()
+    for i,v in pairs(game:GetService("Workspace")[me]:GetChildren()) do
+        if v.Name == "hitbox" then
+            v:ClearAllChildren()
+            wait()
+        end
+    end
+end)
+
+
+EXTRA:Button("Teleport to End (RISKY)", function()
+for i,v in pairs(game:GetService("Workspace").tower.sections.finish:GetChildren()) do
+    if v.Name == "FinishGlow" then
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+    end
+  end
+ end)
+ 
+INFO:Label("ASTRALITY HUB")
+INFO:Label("ASTRO#5852")
+INFO:Label("discord.gg/p9ZNv9sNDx")
+
